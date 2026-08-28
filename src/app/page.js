@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <main style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
       <h1>Aplicação</h1>
-      <p>!</p>
+      <p>Bah</p>
     </main>
   );
 }
