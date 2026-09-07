@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.title {
+  font-size: 2.2rem;
+  color: #58a6ff;
+  border-bottom: 2px solid #30363d;
+  padding-bottom: 0.5rem;
+}
+
+.section {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.section h2 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #f0f6fc;
+}
+
+.section p {
+  color: #8b949e;
+  line-height: 1.6;
+}
+
+.namesList {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #8b949e;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.namesList strong {
+  color: #c9d1d9;
+}
