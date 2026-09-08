@@ -1,0 +1,29 @@
+.containerHistoria {
+  padding: 3rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.titulo {
+  font-size: 2.2rem;
+  color: #1a1a2e;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.blocoTexto {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-top: 4px solid #00bcd4;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.blocoTexto p {
+  color: #444444;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
