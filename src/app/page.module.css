@@ -17,13 +17,6 @@
     margin-bottom: 0.8rem;
 }
 
-.descricaoPrincipal {
-    font-size: 1.1rem;
-    color: #555555;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-}
-
 .botaoExplorar {
     display: inline-block;
     background-color: #00bcd4;
@@ -33,6 +26,7 @@
     text-decoration: none;
     font-weight: bold;
     transition: background-color 0.3s;
+    margin-top: 1rem;
 }
 
 .botaoExplorar:hover {
@@ -42,7 +36,7 @@
 .secaoCards {
     width: 100%;
     max-width: 1200px;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 
 .gridDestaques {

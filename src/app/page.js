@@ -31,9 +31,6 @@ export default function PaginaInicial() {
         <div className={estilos.containerPrincipal}>
             <section className={estilos.secaoHero}>
                 <h1 className={estilos.tituloPrincipal}>A Magia da Patinação Artística</h1>
-                <p className={estilos.descricaoPrincipal}>
-                    Explore a elegância, a força e a precisão de um dos esportes mais belos e exigentes do mundo.
-                </p>
                 <Link href="/modalidades" className={estilos.botaoExplorar}>
                     Ver Modalidades
                 </Link>
