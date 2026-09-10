@@ -1,8 +1,17 @@
+"use client";
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Header.module.css';
 
 export default function Cabecalho() {
+    const [menuAberto, setMenuAberto] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuAberto(!menuAberto);
+    };
+
     return (
         <header className={styles.headerPrincipal}>
             <div className={styles.logoContainer}>
@@ -18,9 +27,21 @@ export default function Cabecalho() {
                 <h3 className={styles.logoTexto}>Patinação Artística</h3>
             </div>
 
-            <nav className={styles.navLinks}>
-                <Link href="/">Início</Link>
-                <Link href="/historia">História</Link>
+            {/*Hambúrguer*/}
+            <button 
+                className={`${styles.botaoHamburguer} ${menuAberto ? styles.ativo : ''}`} 
+                onClick={toggleMenu}
+                aria-label="Abrir menu"
+            >
+                <span className={styles.linha}></span>
+                <span className={styles.linha}></span>
+                <span className={styles.linha}></span>
+            </button>
+
+            {/* Menu de navegação */}
+            <nav className={`${styles.navLinks} ${menuAberto ? styles.navAberto : ''}`}>
+                <Link href="/" onClick={() => setMenuAberto(false)}>Início</Link>
+                <Link href="/historia" onClick={() => setMenuAberto(false)}>História</Link>
             </nav>
         </header>
     );
