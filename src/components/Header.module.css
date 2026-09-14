@@ -39,7 +39,7 @@
     color: #00bcd4;
 }
 
-/* Botão Hambúrguer oculto por padrão no desktop */
+/* Hambúrguer oculto por padrão (desktop) */
 .botaoHamburguer {
     display: none;
     flex-direction: column;
@@ -61,7 +61,7 @@
 
 @media (max-width: 600px) {
     .botaoHamburguer {
-        display: flex; /* Exibe o botão hambúrguer */
+        display: flex; /* Exibe o hambúrguer */
     }
 
     /* Menu oculto por padrão */

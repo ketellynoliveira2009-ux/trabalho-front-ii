@@ -27,7 +27,7 @@ export default function Cabecalho() {
                 <h3 className={styles.logoTexto}>Patinação Artística</h3>
             </div>
 
-            {/*Hambúrguer*/}
+            {/* Hambúrguer */}
             <button 
                 className={`${styles.botaoHamburguer} ${menuAberto ? styles.ativo : ''}`} 
                 onClick={toggleMenu}
@@ -38,9 +38,10 @@ export default function Cabecalho() {
                 <span className={styles.linha}></span>
             </button>
 
-            {/* Menu de navegação */}
+            {}
             <nav className={`${styles.navLinks} ${menuAberto ? styles.navAberto : ''}`}>
                 <Link href="/" onClick={() => setMenuAberto(false)}>Início</Link>
+                <Link href="/modalidades" onClick={() => setMenuAberto(false)}>Modalidades</Link>
                 <Link href="/historia" onClick={() => setMenuAberto(false)}>História</Link>
             </nav>
         </header>
