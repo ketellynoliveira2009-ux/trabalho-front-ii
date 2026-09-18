@@ -6,7 +6,6 @@
     padding: 1rem 2rem;
     color: #ffffff;
     position: relative;
-    z-index: 10;
 }
 
 .logoContainer {
@@ -57,9 +56,9 @@
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: #1a1a2e;
         padding: 1.5rem;
         gap: 1.5rem;
+        background-color: #1a1a2e;
     }
 
     .navLinks.navAberto {

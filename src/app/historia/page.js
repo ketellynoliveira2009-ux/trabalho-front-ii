@@ -16,6 +16,6 @@ export default function PaginaHistoria() {
                     A Patinação Artística Sobre Rodas apareceu como uma alternativa para os patinadores do gelo que não tinham como praticar durante o verão, já que os lagos se descongelavam. Então, no início, os praticantes dos dois tipos de patinação (gelo e rodas) eram os mesmos, por isso as duas técnicas são muito semelhantes e utilizam praticamente os mesmos termos em seu vocabulário. Não demorou muito para que todos os elementos executados sobre o gelo fossem transportados para as rodas, criando assim esse maravilhoso esporte/arte, tal qual conhecemos hoje. A Patinação Artística é considerada por muitos como a mais espetacular e excitante forma dos esportes sobre rodas, sendo considerada também uma das modalidades desportivas mais completas da atualidade, pois estimula fortemente a coordenação motora, a postura, o equilíbrio, a lateralidade e a capacidade de concentração, além de trazer vários outros benefícios.
                 </p>
             </div>
-        </div>
+        </div> 
     );
 }

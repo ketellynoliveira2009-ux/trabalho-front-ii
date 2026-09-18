@@ -11,7 +11,6 @@ export default function Rodape() {
                     <Link
                         href="https://github.com/ketellynoliveira2009-ux"
                         target="_blank"
-                        rel="noopener noreferrer"
                         className={estilos.linkGitHub}
                     >
                         Ketellyn Oliveira
