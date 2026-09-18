@@ -48,3 +48,17 @@
   color: #444444;
   line-height: 1.5;
 }
+
+@media (max-width: 600px) {
+  .containerModalidades {
+    padding: 1.5rem 1rem;
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+  }
+
+  .itemModalidade {
+    padding: 1.2rem;
+  }
+}

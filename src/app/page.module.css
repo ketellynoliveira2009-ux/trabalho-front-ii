@@ -41,7 +41,7 @@
 
 .gridDestaques {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 2rem;
 }
 
@@ -85,8 +85,16 @@
     line-height: 1.4;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 600px) {
+    .containerPrincipal {
+        padding: 1rem;
+    }
+
+    .tituloPrincipal {
+        font-size: 1.8rem;
+    }
+
     .gridDestaques {
-        flex-direction: row;
+    flex-direction: column;
     }
 }

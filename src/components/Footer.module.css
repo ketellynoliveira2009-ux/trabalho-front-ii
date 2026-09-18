@@ -28,3 +28,13 @@
     color: #00bcd4;
     text-decoration: none;
 }
+
+@media (max-width: 600px) {
+    .rodape {
+        padding: 1rem;
+    }
+
+    .conteudoRodape {
+        font-size: 0.8rem;
+    }
+}
