@@ -5,7 +5,7 @@
     background-color: #1a1a2e;
     padding: 1rem 2rem;
     color: #ffffff;
-    position: relative; /* Necessário para ancorar o menu mobile absoluto */
+    position: relative;
     z-index: 10;
 }
 
@@ -13,14 +13,11 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-weight: bold;
-    font-size: 1.1rem;
 }
 
 .logoTexto {
     color: #ffffff;
-    text-decoration: none;
-    margin-left: 0.5rem;
+    font-size: 1.1rem;
 }
 
 .navLinks {
@@ -39,34 +36,22 @@
     color: #00bcd4;
 }
 
-/* Hambúrguer oculto por padrão (desktop) */
 .botaoHamburguer {
     display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 24px;
-    height: 18px;
     background: transparent;
     border: none;
+    color: #ffffff;
+    font-size: 1.8rem;
     cursor: pointer;
-    padding: 0;
-}
-
-.botaoHamburguer .linha {
-    width: 100%;
-    height: 3px;
-    background-color: #ffffff;
-    transition: all 0.3s ease;
 }
 
 @media (max-width: 600px) {
     .botaoHamburguer {
-        display: flex; /* Exibe o hambúrguer */
+        display: block;
     }
 
-    /* Menu oculto por padrão */
     .navLinks {
-        display: flex;
+        display: none;
         flex-direction: column;
         position: absolute;
         top: 100%;
@@ -75,32 +60,9 @@
         background-color: #1a1a2e;
         padding: 1.5rem;
         gap: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        
-        /* Esconder e mostrar */
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
     }
 
-    /* Menu visível quando ativo */
     .navLinks.navAberto {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-
-    /* Animação "X"*/
-    .botaoHamburguer.ativo .linha:nth-child(1) {
-        transform: translateY(7.5px) rotate(45deg);
-    }
-
-    .botaoHamburguer.ativo .linha:nth-child(2) {
-        opacity: 0;
-    }
-
-    .botaoHamburguer.ativo .linha:nth-child(3) {
-        transform: translateY(-7.5px) rotate(-45deg);
+        display: flex;
     }
 }

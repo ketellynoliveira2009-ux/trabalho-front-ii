@@ -8,14 +8,10 @@ import styles from './Header.module.css';
 export default function Cabecalho() {
     const [menuAberto, setMenuAberto] = useState(false);
 
-    const toggleMenu = () => {
-        setMenuAberto(!menuAberto);
-    };
-
     return (
         <header className={styles.headerPrincipal}>
             <div className={styles.logoContainer}>
-                <Link href="/" className={styles.linkLogo}>
+                <Link href="/">
                     <Image
                         src="/iceSkate.png"
                         alt="Ícone Patinação Artística"
@@ -27,15 +23,12 @@ export default function Cabecalho() {
                 <h3 className={styles.logoTexto}>Patinação Artística</h3>
             </div>
 
-            {/* Hambúrguer */}
+            {}
             <button 
-                className={`${styles.botaoHamburguer} ${menuAberto ? styles.ativo : ''}`} 
-                onClick={toggleMenu}
-                aria-label="Abrir menu"
+                className={styles.botaoHamburguer} 
+                onClick={() => setMenuAberto(!menuAberto)}
             >
-                <span className={styles.linha}></span>
-                <span className={styles.linha}></span>
-                <span className={styles.linha}></span>
+                {menuAberto ? '✕' : '☰'}
             </button>
 
             {}
