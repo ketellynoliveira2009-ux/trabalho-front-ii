@@ -11,7 +11,6 @@ export default function Cabecalho() {
     return (
         <header className={styles.headerPrincipal}>
             <div className={styles.logoContainer}>
-                <Link href="/">
                     <Image
                         src="/iceSkate.png"
                         alt="Ícone Patinação Artística"
@@ -19,7 +18,6 @@ export default function Cabecalho() {
                         height={32}
                         priority
                     />
-                </Link>
                 <h3 className={styles.logoTexto}>Patinação Artística</h3>
             </div>
 
