@@ -5,7 +5,7 @@ import estilos from './page.module.css';
 export default function PaginaInicial() {
     return (
         <div className={estilos.containerPrincipal}>
-            <section className={estilos.secaoHero}>
+            <section className={estilos.secaoTopo}>
                 <h1 className={estilos.tituloPrincipal}>A Magia da Patinação Artística</h1>
                 <Link href="/modalidades" className={estilos.botaoExplorar}>
                     Ver Modalidades
