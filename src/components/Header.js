@@ -34,6 +34,7 @@ export default function Cabecalho() {
             {}
             <nav className={`${styles.navLinks} ${menuAberto ? styles.navAberto : ''}`}>
                 <Link href="/" onClick={() => setMenuAberto(false)}>Início</Link>
+                
                 <Link href="/modalidades" onClick={() => setMenuAberto(false)}>Modalidades</Link>
                 <Link href="/historia" onClick={() => setMenuAberto(false)}>História</Link>
             </nav>
