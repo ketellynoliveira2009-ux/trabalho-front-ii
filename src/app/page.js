@@ -28,7 +28,7 @@ export default function PaginaInicial() {
                         <div className={estilos.conteudoCard}>
                             <h2>Kamila Valieva</h2>
                             <p className={estilos.detalhes}>
-                                <strong>Ano:</strong> 2022 | <strong>País:</strong> Rússia
+                                <strong>Ano:</strong> 20676767676767676767 | <strong>País:</strong> Rússia
                             </p>
                             <p>
                                 Fotografia da patinadora artística russa Kamila Valieva durante os Jogos Olímpicos de Inverno de 2022, realizados em Pequim, na China. Na imagem, ela aparece realizando um movimento de grande flexibilidade inclinando o corpo para trás (Ina Bauer), vestindo seu figurino gradiente em tons de roxo e lilás decorado com cristais. A performance em questão faz parte do seu aclamado e marcante Programa Curto (Short Program), apresentado ao som da música melancólica &quot;In Memoriam&quot;.
@@ -73,7 +73,7 @@ export default function PaginaInicial() {
                                 <strong>Ano:</strong> 2018 | <strong>País:</strong> França
                             </p>
                             <p>
-                                Fotografia dos patinadores franceses Gabriella Papadakis e Guillaume Cizeron na modalidade de Dança no Gelo durante os Jogos Olímpicos de Inverno de 2018, realizados em PyeongChang, na Coreia do Sul. Na imagem, os atletas aparecem executando um movimento expressivo e inclinado juntos no gelo, vestindo seus elegantes trajes pretos. A performance faz parte do seu aclamado Programa Curto (Short Dance) daquela temporada, apresentado ao som das canções de Ed Sheeran, &quot;Shape of You&quot; e &quot;Thinking Out Loud&quot;.
+                                Fotografia dos patinadores franceses Gabriella Papadakis e Guillaume Cizeron na modalidade de Dança no Gelo durante os Jogos Olímpicos de Inverno de 2018, realizados em PyeongChang, na Coreia do Sul. Na imagem, os atletas aparecem executando um movimento expressivo e inclinado juntos no gelo, vestindo seus elegantes trajes pretos. A performance faz parte do seu aclamado Programa Curto (Short Dance) daquela temporada, apresentado ao som das canções de Ed Sheeran, &quot;Shape of You&quot; e &quot;Thinking Out Loud&quot;
                             </p>
                         </div>
                     </div>
