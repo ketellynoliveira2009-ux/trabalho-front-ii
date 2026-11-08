@@ -1,67 +1,9 @@
-.headerPrincipal {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1a1a2e;
-    padding: 1rem 2rem;
-    color: #ffffff;
-    position: relative;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-.logoContainer {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.logoTexto {
-    color: #ffffff;
-    font-size: 1.1rem;
-}
-
-.navLinks {
-    display: flex;
-    gap: 1.5rem;
-}
-
-.navLinks a {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s;
-}
-
-.navLinks a:hover {
-    color: #00bcd4;
-}
-
-.botaoHamburguer {
-    display: none;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    font-size: 1.8rem;
-    cursor: pointer;
-}
-
-@media (max-width: 600px) {
-    .botaoHamburguer {
-        display: block;
-    }
-
-    .navLinks {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        padding: 1.5rem;
-        gap: 1.5rem;
-        background-color: #1a1a2e;
-    }
-
-    .navLinks.navAberto {
-        display: flex;
-    }
+body {
+  font-family: sans-serif;
 }

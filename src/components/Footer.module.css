@@ -1,40 +1,9 @@
-.rodape {
-    background-color: #1a1a2e;
-    color: #ffffff;
-    text-align: center;
-    padding: 1.5rem;
-    margin-top: auto;
-    border-top: 1px solid #2a2a4e;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
-.conteudoRodape {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    font-size: 0.9rem;
-    color: #b0b0b0;
-}
-
-.linkGitHub {
-    color: #b0b0b0;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s;
-}
-
-.linkGitHub:hover {
-    color: #00bcd4;
-    text-decoration: none;
-}
-
-@media (max-width: 600px) {
-    .rodape {
-        padding: 1rem;
-    }
-
-    .conteudoRodape {
-        font-size: 0.8rem;
-    }
+body {
+  font-family: sans-serif;
 }
