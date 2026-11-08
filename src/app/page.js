@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { consultar } from '../lib/api';
 import styles from './page.module.css';
 
-const integrantes = ['Nome do integrante 1', 'Nome do integrante 2'];
+const integrantes = ['Ketellyn Souza de Oliveira', 'Ana Heloisa Alexandrino Diniz'];
 
 export default function Inicio() {
     const [dados, setDados] = useState({ produtos: [], clientes: [], pedidos: [], categorias: [] });
