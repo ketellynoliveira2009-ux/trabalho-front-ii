@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Estoque Fácil
 
-## Getting Started
+Aplicação Next.js responsiva para a atividade de controle de estoque.
 
-First, run the development server:
+## Como usar
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Copie o conteúdo desta pasta para o seu projeto Next.js, mantendo as pastas `src` e `public`.
+2. Execute `npm install` e depois `npm run dev`.
+3. Abra `http://localhost:3000`.
+4. Em `src/app/page.js`, substitua `Nome do integrante 1` e `Nome do integrante 2` pelos nomes da dupla.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação consome a API pública em `https://stock.dev.vilhena.ifro.edu.br/api`. O fluxo de novo pedido cria primeiro o pedido em `/pedidos` e depois registra cada item em `/itens_pedido`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Rotas
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` — Home com integrantes e resumo dinâmico.
+- `/pedidos` — Listagem dinâmica de pedidos.
+- `/pedidos/novo` — Seleção de cliente, inclusão de produtos e criação do pedido.
+- `/categorias`, `/produtos` e `/clientes` — Consultas adicionais pelo menu.
 
-## Learn More
+## Arquivos principais
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/lib/api.js`: base URL e funções de `fetch`.
+- `src/components/Header.js`: menu responsivo.
+- `src/components/Footer.js`: rodapé.
+- `src/app/globals.css`: estilos globais e responsividade.

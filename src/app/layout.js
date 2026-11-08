@@ -1,14 +1,20 @@
 import './globals.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 export const metadata = {
-  title: 'Trabalho Front-end II',
-  description: 'Projeto de Front-end II',
+  title: 'Estoque Fácil | Controle de estoque',
+  description: 'Aplicação responsiva para controle de produtos, clientes e pedidos.',
 };
 
-export default function RootLayout({ children }) {
+export default function Layout({ children }) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body>
+        <Header />
+        <main className="conteudo-principal">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

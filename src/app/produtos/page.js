@@ -1,0 +1,2 @@
+import ListaEntidade from '../../components/ListaEntidade';
+export default function Produtos() { return <ListaEntidade recurso="produtos" titulo="Produtos" descricao="Consulte o catálogo e a quantidade disponível em estoque." colunas={[{ chave: 'id', titulo: 'Código' }, { chave: 'nome', titulo: 'Produto' }, { chave: 'preco', titulo: 'Preço' }, { chave: 'quantidade_estoque', titulo: 'Estoque' }]} />; }
