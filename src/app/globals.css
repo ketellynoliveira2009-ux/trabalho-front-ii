@@ -1,19 +1,116 @@
-
 /* Formulário de pedido */
-.formulario-pedido { max-width: 760px; padding: 26px; }
-.adicionar-item { display: grid; grid-template-columns: 1fr 130px auto; gap: 12px; align-items: end; margin-top: 22px; border-top: 1px solid var(--linha); padding-top: 22px; }
-.quantidade input { width: 100%; }
-.itens { margin-top: 28px; border-top: 1px solid var(--linha); }
-.itens-titulo { display: flex; justify-content: space-between; padding: 20px 0 10px; }
-.itens-titulo span { color: var(--muted); font-size: 12px; }
-.vazio { font-size: 13px; padding: 13px 0; }
-.item-linha { display: grid; grid-template-columns: 1fr auto 28px; gap: 15px; align-items: center; border-bottom: 1px solid #eef2ef; padding: 13px 0; }
-.item-linha strong, .item-linha small { display: block; }
-.item-linha small { color: var(--muted); font-size: 11px; margin-top: 3px; }
-.item-linha button { border: 0; background: transparent; color: #bb6c6c; cursor: pointer; font-size: 22px; }
-.resumo { display: flex; justify-content: space-between; padding: 21px 0; font-size: 14px; }
-.resumo strong { color: var(--verde); font: 700 23px 'Space Grotesk'; }
-.enviar-pedido { width: 100%; }
-.mensagem { margin-bottom: 14px; padding: 12px; border-radius: 8px; background: #fff1ef; color: #a44c45; font-size: 13px; }
-.mensagem.sucesso { background: #e5f7ed; color: #187653; }
-@media (max-width: 768px) { .formulario-pedido { padding: 18px; } .adicionar-item { grid-template-columns: 1fr 92px; } .adicionar-item .botao { grid-column: 1 / -1; } .item-linha { grid-template-columns: 1fr auto 20px; } }
+.formulario-pedido {
+    max-width: 760px;
+    padding: 26px;
+}
+
+.adicionar-item {
+    display: grid;
+    grid-template-columns: 1fr 130px auto;
+    gap: 12px;
+    align-items: end;
+    margin-top: 22px;
+    border-top: 1px solid var(--linha);
+    padding-top: 22px;
+}
+
+.quantidade input {
+    width: 100%;
+}
+
+.itens {
+    margin-top: 28px;
+    border-top: 1px solid var(--linha);
+}
+
+.itens-titulo {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 10px;
+}
+
+.itens-titulo span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.vazio {
+    font-size: 13px;
+    padding: 13px 0;
+}
+
+.item-linha {
+    display: grid;
+    grid-template-columns: 1fr auto 28px;
+    gap: 15px;
+    align-items: center;
+    border-bottom: 1px solid #eef2ef;
+    padding: 13px 0;
+}
+
+.item-linha strong,
+.item-linha small {
+    display: block;
+}
+
+.item-linha small {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.item-linha button {
+    border: 0;
+    background: transparent;
+    color: #bb6c6c;
+    cursor: pointer;
+    font-size: 22px;
+}
+
+.resumo {
+    display: flex;
+    justify-content: space-between;
+    padding: 21px 0;
+    font-size: 14px;
+}
+
+.resumo strong {
+    color: var(--verde);
+    font: 700 23px 'Space Grotesk';
+}
+
+.enviar-pedido {
+    width: 100%;
+}
+
+.mensagem {
+    margin-bottom: 14px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fff1ef;
+    color: #a44c45;
+    font-size: 13px;
+}
+
+.mensagem.sucesso {
+    background: #e5f7ed;
+    color: #187653;
+}
+
+@media (max-width: 768px) {
+    .formulario-pedido {
+        padding: 18px;
+    }
+
+    .adicionar-item {
+        grid-template-columns: 1fr 92px;
+    }
+
+    .adicionar-item .botao {
+        grid-column: 1 / -1;
+    }
+
+    .item-linha {
+        grid-template-columns: 1fr auto 20px;
+    }
+}
