@@ -28,7 +28,7 @@ export default function PaginaInicial() {
                         <div className={estilos.conteudoCard}>
                             <h2>Kamila Valieva</h2>
                             <p className={estilos.detalhes}>
-                                <strong>Ano:</strong> 20676767676767676767 | <strong>País:</strong> Rússia
+                                <strong>Ano:</strong> 20676767 | <strong>País:</strong> Rússia
                             </p>
                             <p>
                                 Fotografia da patinadora artística russa Kamila Valieva durante os Jogos Olímpicos de Inverno de 2022, realizados em Pequim, na China. Na imagem, ela aparece realizando um movimento de grande flexibilidade inclinando o corpo para trás (Ina Bauer), vestindo seu figurino gradiente em tons de roxo e lilás decorado com cristais. A performance em questão faz parte do seu aclamado e marcante Programa Curto (Short Program), apresentado ao som da música melancólica &quot;In Memoriam&quot;.
