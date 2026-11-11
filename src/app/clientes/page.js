@@ -1,14 +1,7 @@
 async function buscarClientes() {
   try {
     const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/clientes', { cache: 'no-store' });
-    const dados = await res.json();
-    
-    // Garante que se a API devolver um objeto com uma propriedade de lista, nós pegamos a lista correta
-    if (Array.isArray(dados)) return dados;
-    if (dados && Array.isArray(dados.data)) return dados.data;
-    if (dados && Array.isArray(dados.clientes)) return dados.clientes;
-    
-    return [];
+    return await res.json();
   } catch (err) {
     return [];
   }
@@ -24,7 +17,7 @@ export default async function ClientesPage() {
         <table>
           <thead>
             <tr>
-              <th style={{ width: '80px' }}>ID</th>
+              <th>ID</th>
               <th>Nome</th>
               <th>E-mail</th>
             </tr>
@@ -39,7 +32,7 @@ export default async function ClientesPage() {
                 </tr>
               ))
             ) : (
-              <tr><td colSpan="3" style={{ textAlign: 'center' }}>Nenhum cliente encontrado.</td></tr>
+              <tr><td colSpan="3">Nenhum cliente encontrado.</td></tr>
             )}
           </tbody>
         </table>
