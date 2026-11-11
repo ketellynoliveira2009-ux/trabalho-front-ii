@@ -1,39 +1,46 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import styles from './Header.module.css';
-
-const links = [
-    { href: '/', label: 'Início', icone: '⌂' },
-    { href: '/categorias', label: 'Categorias', icone: '▦' },
-    { href: '/produtos', label: 'Produtos', icone: '□' },
-    { href: '/clientes', label: 'Clientes', icone: '♙' },
-    { href: '/pedidos', label: 'Pedidos', icone: '▤' },
-];
 
 export default function Header() {
-    const [aberto, setAberto] = useState(false);
-    const caminho = usePathname();
-
-    return (
-        <header className={styles.cabecalho}>
-            <div className={styles.barra}>
-                <Link href="/" className={styles.marca} onClick={() => setAberto(false)}>
-                    <span className={styles.marcaIcone}>EF</span>
-                    <span><strong>Estoque</strong><small>FÁCIL</small></span>
-                </Link>
-                <button className={styles.botaoMenu} onClick={() => setAberto(!aberto)} aria-label="Abrir menu">{aberto ? '×' : '☰'}</button>
-                <nav className={`${styles.navegacao} ${aberto ? styles.aberta : ''}`}>
-                    {links.map((link) => (
-                        <Link key={link.href} href={link.href} className={`${styles.link} ${caminho === link.href || (link.href !== '/' && caminho.startsWith(link.href)) ? styles.ativo : ''}`} onClick={() => setAberto(false)}>
-                            <span>{link.icone}</span>{link.label}
-                        </Link>
-                    ))}
-                    <Link href="/pedidos/novo" className={styles.botaoNovo} onClick={() => setAberto(false)}>+ Novo pedido</Link>
-                </nav>
-            </div>
-        </header>
-    );
+  return (
+    <header style={{ 
+      background: '#fff', 
+      borderBottom: '1px solid #ddd', 
+      height: '60px',                /* Altura fixa */
+      display: 'flex', 
+      alignItems: 'center', 
+      position: 'sticky', 
+      top: 0, 
+      zIndex: 1000,
+      width: '100%'
+    }}>
+      <div style={{ 
+        maxWidth: '1000px', 
+        width: '100%',
+        margin: '0 auto', 
+        padding: '0 16px',
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        whiteSpace: 'nowrap'           /* Impede que o texto quebre de linha */
+      }}>
+        <h2 style={{ fontSize: '1.2rem', color: '#0066cc', margin: 0 }}>
+          Controle de Estoque
+        </h2>
+        
+        <nav style={{ 
+          display: 'flex', 
+          gap: '20px', 
+          alignItems: 'center',
+          overflowX: 'auto'            /* Permite rolar suavemente caso a tela seja menor que os links */
+        }}>
+          <Link href="/" style={{ textDecoration: 'none', color: '#333', fontSize: '0.95rem' }}>Home</Link>
+          <Link href="/categorias" style={{ textDecoration: 'none', color: '#333', fontSize: '0.95rem' }}>Categorias</Link>
+          <Link href="/produtos" style={{ textDecoration: 'none', color: '#333', fontSize: '0.95rem' }}>Produtos</Link>
+          <Link href="/clientes" style={{ textDecoration: 'none', color: '#333', fontSize: '0.95rem' }}>Clientes</Link>
+          <Link href="/pedidos" style={{ textDecoration: 'none', color: '#333', fontSize: '0.95rem' }}>Listar Pedidos</Link>
+          <Link href="/pedidos/novo" style={{ textDecoration: 'none', color: '#0066cc', fontWeight: 'bold', fontSize: '0.95rem' }}>Criar Pedido</Link>
+        </nav>
+      </div>
+    </header>
+  );
 }

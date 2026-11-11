@@ -1,2 +1,42 @@
-import ListaEntidade from '../../components/ListaEntidade';
-export default function Produtos() { return <ListaEntidade recurso="produtos" titulo="Produtos" descricao="Consulte o catálogo e a quantidade disponível em estoque." colunas={[{ chave: 'id', titulo: 'Código' }, { chave: 'nome', titulo: 'Produto' }, { chave: 'preco', titulo: 'Preço' }, { chave: 'quantidade_estoque', titulo: 'Estoque' }]} />; }
+async function buscarProdutos() {
+  try {
+    const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/produtos', { cache: 'no-store' });
+    return await res.json();
+  } catch (err) {
+    return [];
+  }
+}
+
+export default async function ProdutosPage() {
+  const produtos = await buscarProdutos();
+
+  return (
+    <div>
+      <h1>Produtos</h1>
+      <div className="cartao tabela-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Preço</th>
+            </tr>
+          </thead>
+          <tbody>
+            {produtos.length > 0 ? (
+              produtos.map(prod => (
+                <tr key={prod.id}>
+                  <td>{prod.id}</td>
+                  <td>{prod.nome}</td>
+                  <td>R$ {Number(prod.preco || 0).toFixed(2)}</td>
+                </tr>
+              ))
+            ) : (
+              <tr><td colSpan="3">Nenhum produto encontrado.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

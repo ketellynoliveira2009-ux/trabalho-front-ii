@@ -1,8 +1,7 @@
 export default function Footer() {
-    return (
-        <footer className="rodape">
-            <div><strong>Estoque Fácil</strong><span>Controle simples para uma operação mais organizada.</span></div>
-            <span>Projeto acadêmico • 4º bimestre</span>
-        </footer>
-    );
+  return (
+    <footer style={{ background: '#fff', borderTop: '1px solid #ddd', textAlign: 'center', padding: '12px', fontSize: '0.85rem', color: '#666' }}>
+      <p>&copy; 2026 - Controle de Estoque (IFRO Vilhena)</p>
+    </footer>
+  );
 }

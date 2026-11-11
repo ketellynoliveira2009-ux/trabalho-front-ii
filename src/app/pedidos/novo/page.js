@@ -1,17 +1,139 @@
 'use client';
 
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { consultar, enviar, formatarMoeda } from '../../../lib/api';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export default function NovoPedido() {
-  const [clientes, setClientes] = useState([]); const [produtos, setProdutos] = useState([]); const [clienteId, setClienteId] = useState(''); const [produtoId, setProdutoId] = useState(''); const [quantidade, setQuantidade] = useState(1); const [itens, setItens] = useState([]); const [estado, setEstado] = useState(''); const [mensagem, setMensagem] = useState('');
-  useEffect(() => { Promise.all([consultar('clientes'), consultar('produtos')]).then(([pessoas, catalogo]) => { setClientes(pessoas); setProdutos(catalogo); }).catch((e) => setMensagem(e.message)); }, []);
-  const produtoSelecionado = produtos.find((produto) => String(produto.id) === String(produtoId));
-  function adicionarItem(evento) { evento.preventDefault(); if (!produtoSelecionado || quantidade < 1) return; const existente = itens.find((item) => item.produto.id === produtoSelecionado.id); if (existente) setItens(itens.map((item) => item.produto.id === produtoSelecionado.id ? { ...item, quantidade: item.quantidade + Number(quantidade) } : item)); else setItens([...itens, { produto: produtoSelecionado, quantidade: Number(quantidade) }]); setProdutoId(''); setQuantidade(1); }
-  function removerItem(id) { setItens(itens.filter((item) => item.produto.id !== id)); }
-  async function salvarPedido(evento) { evento.preventDefault(); setMensagem(''); if (!clienteId || !itens.length) { setMensagem('Selecione um cliente e adicione pelo menos um produto.'); return; } setEstado('salvando'); try { const pedido = await enviar('pedidos', 'POST', { cliente_id: Number(clienteId) }); await Promise.all(itens.map((item) => enviar('itens_pedido', 'POST', { pedido_id: pedido.id, produto_id: item.produto.id, quantidade: item.quantidade, preco_unitario: Number(item.produto.preco) }))); setEstado('sucesso'); setMensagem(`Pedido #${pedido.id} criado com sucesso.`); setClienteId(''); setItens([]); } catch (e) { setEstado(''); setMensagem(e.message); } }
-  const total = itens.reduce((soma, item) => soma + Number(item.produto.preco) * item.quantidade, 0);
-  return <section className="container"><div className="cabecalho-pagina"><div><span className="eyebrow">Operação</span><h1>Novo pedido</h1><p>Selecione o cliente e monte os itens desta venda.</p></div><Link href="/pedidos" className="botao secundario">← Voltar</Link></div><form onSubmit={salvarPedido} className="card formulario-pedido"><div className="campo"><label htmlFor="cliente">Cliente</label><select id="cliente" value={clienteId} onChange={(e) => setClienteId(e.target.value)}><option value="">Selecione um cliente</option>{clientes.map((cliente) => <option value={cliente.id} key={cliente.id}>{cliente.nome}</option>)}</select></div><div className="adicionar-item"><div className="campo"><label htmlFor="produto">Produto</label><select id="produto" value={produtoId} onChange={(e) => setProdutoId(e.target.value)}><option value="">Selecione um produto</option>{produtos.map((produto) => <option value={produto.id} key={produto.id}>{produto.nome} — {formatarMoeda(produto.preco)}</option>)}</select></div><div className="campo quantidade"><label htmlFor="quantidade">Quantidade</label><input id="quantidade" type="number" min="1" value={quantidade} onChange={(e) => setQuantidade(e.target.value)} /></div><button type="button" className="botao secundario" onClick={adicionarItem}>Adicionar</button></div><div className="itens"><div className="itens-titulo"><strong>Itens do pedido</strong><span>{itens.length} {itens.length === 1 ? 'item' : 'itens'}</span></div>{!itens.length && <p className="vazio">Nenhum produto adicionado ainda.</p>}{itens.map((item) => <div className="item-linha" key={item.produto.id}><div><strong>{item.produto.nome}</strong><small>{item.quantidade} × {formatarMoeda(item.produto.preco)}</small></div><strong>{formatarMoeda(item.produto.preco * item.quantidade)}</strong><button type="button" onClick={() => removerItem(item.produto.id)} aria-label="Remover item">×</button></div>)}</div><div className="resumo"><span>Total do pedido</span><strong>{formatarMoeda(total)}</strong></div>{mensagem && <div className={estado === 'sucesso' ? 'mensagem sucesso' : 'mensagem'}>{mensagem}</div>}<button className="botao enviar-pedido" disabled={estado === 'salvando'}>{estado === 'salvando' ? 'Salvando...' : 'Criar pedido'}</button></form></section>;
+export default function CriarPedidoPage() {
+  const router = useRouter();
+  const [clientes, setClientes] = useState([]);
+  const [produtos, setProdutos] = useState([]);
+  
+  const [clienteId, setClienteId] = useState('');
+  const [produtoId, setProdutoId] = useState('');
+  const [quantidade, setQuantidade] = useState(1);
+  const [itensPedido, setItemsPedido] = useState([]);
+
+  useEffect(() => {
+    fetch('https://stock.dev.vilhena.ifro.edu.br/api/clientes')
+      .then(res => res.json())
+      .then(data => setClientes(data))
+      .catch(() => {});
+
+    fetch('https://stock.dev.vilhena.ifro.edu.br/api/produtos')
+      .then(res => res.json())
+      .then(data => setProdutos(data))
+      .catch(() => {});
+  }, []);
+
+  const adicionarItem = () => {
+    if (!produtoId || quantidade < 1) {
+      alert('Selecione um produto e uma quantidade válida.');
+      return;
+    }
+
+    const prodObj = produtos.find(p => p.id == produtoId);
+    if (!prodObj) return;
+
+    setItemsPedido([
+      ...itensPedido,
+      { produto_id: produtoId, nome: prodObj.nome, quantidade: parseInt(quantidade) }
+    ]);
+
+    setProdutoId('');
+    setQuantidade(1);
+  };
+
+  const enviarPedido = async (e) => {
+    e.preventDefault();
+
+    if (!clienteId) {
+      alert('Selecione um cliente.');
+      return;
+    }
+
+    if (itensPedido.length === 0) {
+      alert('Adicione pelo menos um item ao pedido.');
+      return;
+    }
+
+    const payload = {
+      cliente_id: clienteId,
+      itens: itensPedido.map(i => ({ produto_id: i.produto_id, quantidade: i.quantidade }))
+    };
+
+    try {
+      const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/pedidos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        alert('Pedido criado com sucesso!');
+        router.push('/pedidos');
+      } else {
+        alert('Erro ao criar pedido.');
+      }
+    } catch (err) {
+      alert('Erro de conexão.');
+    }
+  };
+
+  return (
+    <div>
+      <h1>Criar Novo Pedido</h1>
+      <div className="cartao">
+        <form onSubmit={enviarPedido}>
+          <div className="formulario-grupo">
+            <label>Cliente</label>
+            <select value={clienteId} onChange={e => setClienteId(e.target.value)} required>
+              <option value="">Selecione um cliente...</option>
+              {clientes.map(c => (
+                <option key={c.id} value={c.id}>{c.nome}</option>
+              ))}
+            </select>
+          </div>
+
+          <hr style={{ margin: '16px 0', border: '0', borderTop: '1px solid #ddd' }} />
+
+          <h3>Adicionar Produtos</h3>
+          <div className="formulario-grupo" style={{ marginTop: '10px' }}>
+            <label>Produto</label>
+            <select value={produtoId} onChange={e => setProdutoId(e.target.value)}>
+              <option value="">Selecione um produto...</option>
+              {produtos.map(p => (
+                <option key={p.id} value={p.id}>{p.nome}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="formulario-grupo">
+            <label>Quantidade</label>
+            <input type="number" min="1" value={quantidade} onChange={e => setQuantidade(e.target.value)} />
+          </div>
+
+          <button type="button" onClick={adicionarItem} style={{ background: '#555' }}>
+            Adicionar Item
+          </button>
+
+          <div style={{ marginTop: '16px' }}>
+            <h4>Itens adicionados:</h4>
+            {itensPedido.length === 0 ? (
+              <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '4px' }}>Nenhum item na lista.</p>
+            ) : (
+              <ul style={{ marginTop: '6px', paddingLeft: '20px' }}>
+                {itensPedido.map((item, index) => (
+                  <li key={index}>{item.nome} - Qtd: {item.quantidade}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <button type="submit" style={{ marginTop: '16px', width: '100%' }}>
+            Finalizar Pedido
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
-
