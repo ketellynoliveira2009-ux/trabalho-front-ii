@@ -5,6 +5,10 @@
   font-family: Arial, sans-serif;
 }
 
+html {
+  overflow-y: scroll; /* Mantém a barra de rolagem sempre visível, impedindo o layout de saltar */
+}
+
 body {
   background-color: #f4f6f8;
   color: #333;
