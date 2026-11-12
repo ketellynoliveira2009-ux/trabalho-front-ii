@@ -1,14 +1,29 @@
-async function buscarProdutos() {
-  try {
-    const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/produtos', { cache: 'no-store' });
-    return await res.json();
-  } catch (err) {
-    return [];
-  }
-}
+'use client';
 
-export default async function ProdutosPage() {
-  const produtos = await buscarProdutos();
+import { useState, useEffect } from 'react';
+
+export default function ProdutosPage() {
+  const [produtos, setProdutos] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    async function buscarProdutos() {
+      try {
+        const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/produtos', {
+          cache: 'no-store'
+        });
+        const dados = await res.json();
+        setProdutos(Array.isArray(dados) ? dados : []);
+      } catch (err) {
+        console.error('Erro ao buscar produtos:', err);
+        setProdutos([]);
+      } finally {
+        setCarregando(false);
+      }
+    }
+
+    buscarProdutos();
+  }, []);
 
   return (
     <div>
@@ -23,7 +38,9 @@ export default async function ProdutosPage() {
             </tr>
           </thead>
           <tbody>
-            {produtos.length > 0 ? (
+            {carregando ? (
+              <tr><td colSpan="3">Carregando produtos...</td></tr>
+            ) : produtos.length > 0 ? (
               produtos.map(prod => (
                 <tr key={prod.id}>
                   <td>{prod.id}</td>

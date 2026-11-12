@@ -12,17 +12,18 @@ export default function CriarPedidoPage() {
   const [produtoId, setProdutoId] = useState('');
   const [quantidade, setQuantidade] = useState(1);
   const [itensPedido, setItemsPedido] = useState([]);
+  const [enviando, setEnviando] = useState(false);
 
   useEffect(() => {
-    fetch('https://stock.dev.vilhena.ifro.edu.br/api/clientes')
+    fetch('https://stock.dev.vilhena.ifro.edu.br/api/clientes', { cache: 'no-store' })
       .then(res => res.json())
-      .then(data => setClientes(data))
-      .catch(() => {});
+      .then(data => setClientes(Array.isArray(data) ? data : []))
+      .catch(err => console.error('Erro ao carregar clientes:', err));
 
-    fetch('https://stock.dev.vilhena.ifro.edu.br/api/produtos')
+    fetch('https://stock.dev.vilhena.ifro.edu.br/api/produtos', { cache: 'no-store' })
       .then(res => res.json())
-      .then(data => setProdutos(data))
-      .catch(() => {});
+      .then(data => setProdutos(Array.isArray(data) ? data : []))
+      .catch(err => console.error('Erro ao carregar produtos:', err));
   }, []);
 
   const adicionarItem = () => {
@@ -36,7 +37,11 @@ export default function CriarPedidoPage() {
 
     setItemsPedido([
       ...itensPedido,
-      { produto_id: produtoId, nome: prodObj.nome, quantidade: parseInt(quantidade) }
+      { 
+        produto_id: Number(produtoId), 
+        nome: prodObj.nome, 
+        quantidade: parseInt(quantidade, 10) 
+      }
     ]);
 
     setProdutoId('');
@@ -57,10 +62,14 @@ export default function CriarPedidoPage() {
     }
 
     const payload = {
-      cliente_id: clienteId,
-      itens: itensPedido.map(i => ({ produto_id: i.produto_id, quantidade: i.quantidade }))
+      cliente_id: Number(clienteId),
+      itens: itensPedido.map(i => ({ 
+        produto_id: Number(i.produto_id), 
+        quantidade: Number(i.quantidade) 
+      }))
     };
 
+    setEnviando(true);
     try {
       const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/pedidos', {
         method: 'POST',
@@ -72,10 +81,14 @@ export default function CriarPedidoPage() {
         alert('Pedido criado com sucesso!');
         router.push('/pedidos');
       } else {
-        alert('Erro ao criar pedido.');
+        const erroData = await res.json().catch(() => ({}));
+        alert(`Erro ao criar pedido: ${erroData.message || erroData.error || res.status}`);
       }
     } catch (err) {
-      alert('Erro de conexão.');
+      console.error('Erro na requisição:', err);
+      alert('Erro de conexão com a API.');
+    } finally {
+      setEnviando(false);
     }
   };
 
@@ -129,8 +142,8 @@ export default function CriarPedidoPage() {
             )}
           </div>
 
-          <button type="submit" style={{ marginTop: '16px', width: '100%' }}>
-            Finalizar Pedido
+          <button type="submit" disabled={enviando} style={{ marginTop: '16px', width: '100%' }}>
+            {enviando ? 'Salvando Pedido...' : 'Finalizar Pedido'}
           </button>
         </form>
       </div>

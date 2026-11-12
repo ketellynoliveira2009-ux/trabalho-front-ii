@@ -1,14 +1,29 @@
-async function buscarCategorias() {
-  try {
-    const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/categorias', { cache: 'no-store' });
-    return await res.json();
-  } catch (err) {
-    return [];
-  }
-}
+'use client';
 
-export default async function CategoriasPage() {
-  const categorias = await buscarCategorias();
+import { useState, useEffect } from 'react';
+
+export default function CategoriasPage() {
+  const [categorias, setCategorias] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    async function buscarCategorias() {
+      try {
+        const res = await fetch('https://stock.dev.vilhena.ifro.edu.br/api/categorias', {
+          cache: 'no-store'
+        });
+        const dados = await res.json();
+        setCategorias(Array.isArray(dados) ? dados : []);
+      } catch (err) {
+        console.error('Erro ao buscar categorias:', err);
+        setCategorias([]);
+      } finally {
+        setCarregando(false);
+      }
+    }
+
+    buscarCategorias();
+  }, []);
 
   return (
     <div>
@@ -22,7 +37,9 @@ export default async function CategoriasPage() {
             </tr>
           </thead>
           <tbody>
-            {categorias.length > 0 ? (
+            {carregando ? (
+              <tr><td colSpan="2">Carregando categorias...</td></tr>
+            ) : categorias.length > 0 ? (
               categorias.map(cat => (
                 <tr key={cat.id}>
                   <td>{cat.id}</td>
