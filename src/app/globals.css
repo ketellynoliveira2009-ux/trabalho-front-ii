@@ -1,95 +1,15 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-}
-
-html {
-  overflow-y: scroll; /* Mantém a barra de rolagem sempre visível, impedindo o layout de saltar */
-}
-
-body {
-  background-color: #f4f6f8;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.container-principal {
-  max-width: 1000px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 24px 16px;
-  flex: 1;
-}
-
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 16px;
-  color: #111;
-}
-
-.cartao {
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
-
-.tabela-container {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  background: #fff;
-}
-
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  font-size: 0.95rem;
-}
-
-th {
-  background-color: #f8f9fa;
-  color: #555;
-}
-
-.formulario-grupo {
-  margin-bottom: 12px;
-}
-
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 4px;
-  font-size: 0.9rem;
-}
-
-select, input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-button {
-  background-color: #0066cc;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background-color: #0055b3;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+html { overflow-y: scroll; }
+body { min-height: 100vh; display: flex; flex-direction: column; background: #f4f6f8; color: #333; }
+.container-principal { width: 100%; max-width: 1000px; flex: 1; margin: 0 auto; padding: 24px 16px; }
+h1 { margin-bottom: 16px; color: #111; font-size: 1.5rem; } h2 { margin-bottom: 12px; font-size: 1.15rem; color: #222; } h3 { font-size: 1rem; }
+.cartao { margin-bottom: 16px; padding: 16px; border: 1px solid #ddd; border-radius: 6px; background: #fff; }
+.formulario-grupo { margin-bottom: 12px; } label { display: block; margin-bottom: 4px; font-size: .9rem; font-weight: bold; } select, input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; }
+button { cursor: pointer; } button:disabled { cursor: not-allowed; opacity: .65; }
+.formulario-linha { display: grid; grid-template-columns: minmax(0, 1fr) 130px auto; gap: 12px; align-items: end; margin-top: 16px; } .formulario-linha .formulario-grupo { margin-bottom: 0; }
+.botao-secundario, .botao-enviar { border: 0; border-radius: 4px; padding: 10px 16px; color: #fff; background: #555; font-weight: bold; } .botao-enviar { width: 100%; margin-top: 18px; background: #0066cc; } .botao-secundario:hover { background: #444; } .botao-enviar:hover { background: #0055b3; }
+.separador { margin: 18px 0; border: 0; border-top: 1px solid #ddd; } .mensagem-formulario { margin-bottom: 16px; } .erro { color: #9d2f2f; background: #fff0f0; border-color: #e5baba; }
+.itens-formulario { margin-top: 22px; padding-top: 18px; border-top: 1px solid #eee; } .itens-formulario p { margin-top: 8px; color: #666; font-size: .9rem; } .itens-formulario ul { margin-top: 8px; list-style: none; } .itens-formulario li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid #eee; } .botao-remover { border: 0; color: #a44c45; background: transparent; text-decoration: underline; }
+.pedido-card { padding: 16px; } .pedido-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; } .pedido-cabecalho h2 { margin: 0; } .status-pedido { padding: 4px 8px; border-radius: 12px; color: #075b43; background: #e5f7ed; font-size: .8rem; text-transform: lowercase; } .pedido-card p { margin-top: 6px; } .pedido-itens { margin-top: 12px; padding-top: 10px; border-top: 1px solid #eee; } .pedido-itens ul { margin: 6px 0 0 20px; } .pedido-itens li { margin-top: 4px; }
+.tabela-container { overflow-x: auto; } table { width: 100%; border-collapse: collapse; text-align: left; background: #fff; } th, td { padding: 10px; border-bottom: 1px solid #eee; font-size: .95rem; } th { color: #555; background: #f8f9fa; }
+@media (max-width: 768px) { .container-principal { padding: 20px 12px; } .formulario-linha { grid-template-columns: 1fr 96px; } .formulario-linha .botao-secundario { grid-column: 1 / -1; } .pedido-cabecalho { align-items: flex-start; flex-direction: column; } .itens-formulario li { align-items: flex-start; flex-direction: column; } }

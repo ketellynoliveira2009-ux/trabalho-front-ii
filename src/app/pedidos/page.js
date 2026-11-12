@@ -1,58 +1,60 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+const API_URL = 'https://stock.dev.vilhena.ifro.edu.br/api';
+
+async function consultar(recurso) {
+  const resposta = await fetch(`${API_URL}/${recurso}`, { cache: 'no-store' });
+  const dados = await resposta.json().catch(() => null);
+  if (!resposta.ok) throw new Error(dados?.erro || dados?.message || `Erro ${resposta.status}`);
+  return dados;
+}
+
+function formatarData(data) {
+  if (!data) return '—';
+  return new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date(data));
+}
 
 export default function PedidosPage() {
   const [pedidos, setPedidos] = useState([]);
   const [clientes, setClientes] = useState([]);
-  const [carregando, setCarregando] = useState(true);
+  const [produtos, setProdutos] = useState([]);
+  const [itens, setItens] = useState([]);
+  const [estado, setEstado] = useState('carregando');
+  const [erro, setErro] = useState('');
 
   useEffect(() => {
-    async function buscarDadosPedidos() {
-      try {
-        const [resPedidos, resClientes] = await Promise.all([
-          fetch('https://stock.dev.vilhena.ifro.edu.br/api/pedidos', { cache: 'no-store' }).then(r => r.json()),
-          fetch('https://stock.dev.vilhena.ifro.edu.br/api/clientes', { cache: 'no-store' }).then(r => r.json())
-        ]);
-        
-        setPedidos(Array.isArray(resPedidos) ? resPedidos : []);
-        setClientes(Array.isArray(resClientes) ? resClientes : []);
-      } catch (err) {
-        console.error('Erro ao buscar pedidos ou clientes:', err);
-        setPedidos([]);
-        setClientes([]);
-      } finally {
-        setCarregando(false);
-      }
-    }
-
-    buscarDadosPedidos();
+    Promise.all([consultar('pedidos'), consultar('clientes'), consultar('produtos'), consultar('itens_pedido')])
+      .then(([dadosPedidos, dadosClientes, dadosProdutos, dadosItens]) => {
+        setPedidos(Array.isArray(dadosPedidos) ? dadosPedidos : []);
+        setClientes(Array.isArray(dadosClientes) ? dadosClientes : []);
+        setProdutos(Array.isArray(dadosProdutos) ? dadosProdutos : []);
+        setItens(Array.isArray(dadosItens) ? dadosItens : []);
+        setEstado('pronto');
+      })
+      .catch((error) => { setErro(error.message); setEstado('erro'); });
   }, []);
 
-  const mapaClientes = {};
-  clientes.forEach(c => { mapaClientes[c.id] = c.nome; });
+  const mapaClientes = Object.fromEntries(clientes.map((cliente) => [cliente.id, cliente.nome]));
+  const mapaProdutos = Object.fromEntries(produtos.map((produto) => [produto.id, produto.nome]));
 
   return (
-    <div>
-      <h1>Pedidos Cadastrados</h1>
-      {carregando ? (
-        <div className="cartao">
-          <p>Carregando pedidos...</p>
-        </div>
-      ) : pedidos.length > 0 ? (
-        pedidos.map(pedido => (
-          <div key={pedido.id} className="cartao">
-            <h3>Pedido #{pedido.id}</h3>
-            <p style={{ marginTop: '6px' }}>
-              <strong>Cliente:</strong> {mapaClientes[pedido.cliente_id] || `Cliente #${pedido.cliente_id}`}
-            </p>
+    <section>
+      <h1>Pedidos cadastrados</h1>
+      {estado === 'carregando' && <div className="cartao">Carregando pedidos...</div>}
+      {estado === 'erro' && <div className="cartao erro" role="alert">Não foi possível carregar os pedidos: {erro}</div>}
+      {estado === 'pronto' && pedidos.length === 0 && <div className="cartao">Nenhum pedido cadastrado.</div>}
+      {estado === 'pronto' && pedidos.map((pedido) => {
+        const itensDoPedido = itens.filter((item) => Number(item.pedido_numero) === Number(pedido.id));
+        return <article key={pedido.id} className="cartao pedido-card">
+          <div className="pedido-cabecalho"><h2>Pedido #{pedido.id}</h2><span className="status-pedido">{pedido.status || 'pendente'}</span></div>
+          <p><strong>Cliente:</strong> {mapaClientes[pedido.cliente_id] || `Cliente #${pedido.cliente_id}`}</p>
+          <p><strong>Data:</strong> {formatarData(pedido.data_pedido)}</p>
+          <div className="pedido-itens"><strong>Itens:</strong>
+            {itensDoPedido.length === 0 ? <span> Nenhum item encontrado.</span> : <ul>{itensDoPedido.map((item) => <li key={item.id}>{mapaProdutos[item.produto_id] || `Produto #${item.produto_id}`} — quantidade: {item.quantidade}</li>)}</ul>}
           </div>
-        ))
-      ) : (
-        <div className="cartao">
-          <p>Nenhum pedido cadastrado.</p>
-        </div>
-      )}
-    </div>
+        </article>;
+      })}
+    </section>
   );
 }
