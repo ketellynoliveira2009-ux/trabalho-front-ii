@@ -2,13 +2,16 @@
 
 Aplicação Next.js responsiva para a atividade de controle de estoque.
 
-## Como usar
+## Como executar
 
-1. Execute `npm install`.
-2. Execute `npm run dev`.
-3. Abra `http://localhost:3000`.
+```bash
+npm install
+npm run dev
+```
 
-Para validar a entrega, execute `npm run build`. A aplicação consome a API pública em `https://stock.dev.vilhena.ifro.edu.br/api`.
+Abra `http://localhost:3000`.
+
+Para validar a produção, execute `npm run build` e depois `npm run start`. A aplicação consome a API pública em `https://stock.dev.vilhena.ifro.edu.br/api`.
 
 ## Fluxo de pedidos
 
@@ -21,9 +24,12 @@ A criação de pedido envia primeiro `cliente_id` para `/pedidos`. Depois, envia
 - `/pedidos/novo` — Seleção de cliente, inclusão de produtos e criação do pedido.
 - `/categorias`, `/produtos` e `/clientes` — Consultas adicionais pelo menu.
 
-## Arquivos principais
+## Organização
 
-- As páginas utilizam `fetch` diretamente para consumir a API pública.
-- `src/components/Header.js` — Menu responsivo.
-- `src/components/Footer.js` — Rodapé.
-- `src/app/globals.css` — Estilos globais e responsividade.
+- `src/app` — páginas e estilos globais.
+- `src/components/Header.js` — menu responsivo.
+- `src/components/Footer.js` — rodapé.
+
+## Entrega
+
+Não inclua `node_modules`, `.next` ou arquivos de build no ZIP. Após extrair a entrega, execute `npm install` para instalar as dependências com as permissões corretas e então execute `npm run build`.

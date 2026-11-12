@@ -43,18 +43,16 @@ export default function Header() {
         </button>
 
         <nav
-          className={`${styles.navegacao} ${
-            menuAberto ? styles.aberta : ''
-          }`}
+          className={`${styles.navegacao} ${menuAberto ? styles.aberta : ''
+            }`}
           aria-label="Navegação principal"
         >
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`${styles.link} ${
-                linkAtivo(link.href) ? styles.ativo : ''
-              }`}
+              className={`${styles.link} ${linkAtivo(link.href) ? styles.ativo : ''
+                }`}
               onClick={fecharMenu}
             >
               {link.label}
