@@ -17,18 +17,10 @@ export default function Header() {
   const pathname = usePathname();
   const [menuAberto, setMenuAberto] = useState(false);
 
-  function fecharMenu() {
-    setMenuAberto(false);
-  }
-
-  function linkAtivo(href) {
-    return href === '/' ? pathname === '/' : pathname.startsWith(href);
-  }
-
   return (
     <header className={styles.cabecalho}>
       <div className={styles.barra}>
-        <Link href="/" className={styles.marca} onClick={fecharMenu}>
+        <Link href="/" className={styles.marca} onClick={() => setMenuAberto(false)}>
           Controle de Estoque
         </Link>
 
@@ -37,7 +29,7 @@ export default function Header() {
           className={styles.botaoMenu}
           aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={menuAberto}
-          onClick={() => setMenuAberto((aberto) => !aberto)}
+          onClick={() => setMenuAberto(!menuAberto)}
         >
           {menuAberto ? '×' : '☰'}
         </button>
@@ -51,9 +43,8 @@ export default function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className={`${styles.link} ${linkAtivo(link.href) ? styles.ativo : ''
-                }`}
-              onClick={fecharMenu}
+              className={`${styles.link} ${(link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)) ? styles.ativo : ''}`}
+              onClick={() => setMenuAberto(false)}
             >
               {link.label}
             </Link>
@@ -62,7 +53,7 @@ export default function Header() {
           <Link
             href="/pedidos/novo"
             className={styles.botaoNovo}
-            onClick={fecharMenu}
+            onClick={() => setMenuAberto(false)}
           >
             Criar pedido
           </Link>

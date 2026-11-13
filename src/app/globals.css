@@ -250,14 +250,15 @@ th {
         align-items: flex-start;
         flex-direction: column;
     }
-}
-/* Evita que tabelas e formulários ultrapassem a largura da tela. */
-img, table, input, select {
-    max-width: 100%;
-}
 
-@media (max-width: 768px) {
     table {
         min-width: 520px;
     }
+}
+
+img,
+table,
+input,
+select {
+    max-width: 100%;
 }
