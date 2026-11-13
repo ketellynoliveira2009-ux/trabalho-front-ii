@@ -45,7 +45,10 @@ export default function PedidosPage() {
       {estado === 'erro' && <div className="cartao erro" role="alert">Não foi possível carregar os pedidos: {erro}</div>}
       {estado === 'pronto' && pedidos.length === 0 && <div className="cartao">Nenhum pedido cadastrado.</div>}
       {estado === 'pronto' && pedidos.map((pedido) => {
-        const itensDoPedido = itens.filter((item) => Number(item.pedido_numero) === Number(pedido.id));
+        const itensDoPedido = itens.filter((item) => {
+          const idPedidoItem = item.pedido_id ?? item.pedido_numero ?? item.id_pedido ?? item.pedido?.id;
+          return Number(idPedidoItem) === Number(pedido.id);
+        });
         return <article key={pedido.id} className="cartao pedido-card">
           <div className="pedido-cabecalho"><h2>Pedido #{pedido.id}</h2><span className="status-pedido">{pedido.status || 'pendente'}</span></div>
           <p><strong>Cliente:</strong> {mapaClientes[pedido.cliente_id] || `Cliente #${pedido.cliente_id}`}</p>

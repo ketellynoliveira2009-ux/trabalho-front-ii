@@ -7,7 +7,10 @@ const API_URL = 'https://stock.dev.vilhena.ifro.edu.br/api';
 async function consultar(recurso) {
   const resposta = await fetch(`${API_URL}/${recurso}`, { cache: 'no-store' });
   const dados = await resposta.json().catch(() => null);
-  if (!resposta.ok) throw new Error(dados?.erro || dados?.message || `Erro ${resposta.status}`);
+  if (!resposta.ok) {
+    const mensagem = dados?.erro || dados?.message || dados?.erros?.[0]?.message || dados?.erros?.[0] || `Erro ${resposta.status}`;
+    throw new Error(mensagem);
+  }
   return dados;
 }
 
@@ -18,7 +21,10 @@ async function enviar(recurso, method, body) {
     body: JSON.stringify(body),
   });
   const dados = await resposta.json().catch(() => null);
-  if (!resposta.ok) throw new Error(dados?.erro || dados?.message || `Erro ${resposta.status}`);
+  if (!resposta.ok) {
+    const mensagem = dados?.erro || dados?.message || dados?.erros?.[0]?.message || dados?.erros?.[0] || `Erro ${resposta.status}`;
+    throw new Error(mensagem);
+  }
   return dados;
 }
 
@@ -42,8 +48,13 @@ export default function CriarPedidoPage() {
     const produto = produtos.find((item) => Number(item.id) === Number(produtoId)); const quantidadeNumerica = Number(quantidade);
     if (!produto) { setErro('Selecione um produto.'); return; }
     if (!Number.isInteger(quantidadeNumerica) || quantidadeNumerica < 1) { setErro('Informe uma quantidade inteira maior que zero.'); return; }
-    const itemExistente = itensPedido.find((item) => item.produto_id === produto.id); const quantidadeTotal = (itemExistente?.quantidade || 0) + quantidadeNumerica;
-    if (quantidadeTotal > Number(produto.quantidade_estoque)) { setErro(`A quantidade solicitada para “${produto.nome}” excede o estoque disponível (${produto.quantidade_estoque}).`); return; }
+    const itemExistente = itensPedido.find((item) => Number(item.produto_id) === Number(produto.id));
+    const quantidadeTotal = (itemExistente?.quantidade || 0) + quantidadeNumerica;
+    const estoque = Number(produto.quantidade_estoque);
+    if (!Number.isFinite(estoque) || quantidadeTotal > estoque) {
+      setErro(`A quantidade solicitada para "${produto.nome}" não está disponível no estoque.`);
+      return;
+    }
     setItensPedido((itensAtuais) => itemExistente ? itensAtuais.map((item) => item.produto_id === produto.id ? { ...item, quantidade: quantidadeTotal } : item) : [...itensAtuais, { produto_id: produto.id, nome: produto.nome, preco: Number(produto.preco), quantidade: quantidadeNumerica }]);
     setProdutoId(''); setQuantidade(1); setErro('');
   }
@@ -59,7 +70,14 @@ export default function CriarPedidoPage() {
       // A API cria o pedido primeiro e aceita somente cliente_id neste endpoint.
       const pedidoCriado = await enviar('pedidos', 'POST', { cliente_id: Number(clienteId) }); const pedidoId = pedidoCriado?.id;
       if (!pedidoId) throw new Error('A API não retornou o id do pedido criado.');
-      await Promise.all(itensPedido.map((item) => enviar('itens_pedido', 'POST', { pedido_id: Number(pedidoId), produto_id: Number(item.produto_id), quantidade: Number(item.quantidade), preco_unitario: Number(item.preco) })));
+      for (const item of itensPedido) {
+        await enviar('itens_pedido', 'POST', {
+          pedido_id: Number(pedidoId),
+          produto_id: Number(item.produto_id),
+          quantidade: Number(item.quantidade),
+          preco_unitario: Number(item.preco),
+        });
+      }
       window.alert('Pedido criado com sucesso!'); router.push('/pedidos');
     } catch (error) { setErro(`Não foi possível criar o pedido: ${error.message}`); } finally { setEnviando(false); }
   }
